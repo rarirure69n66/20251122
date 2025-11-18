@@ -1,0 +1,149 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>THEE INSANE MONKEYS / セトリ＆歌詞ページ</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    background: #111;
+    color: #fff;
+    font-family: "Helvetica", "Arial", sans-serif;
+    line-height: 1.7;
+  }
+
+  /* --- トップバナー --- */
+  #banner {
+    width: 100%;
+    max-width: 100%;
+    display: block;
+  }
+
+  .wrap {
+    padding: 20px;
+    max-width: 960px;
+    margin: auto;
+  }
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 5px;
+    font-weight: bold;
+  }
+
+  .desc {
+    font-size: 15px;
+    margin-bottom: 30px;
+    opacity: 0.9;
+  }
+
+  h2 {
+    font-size: 22px;
+    margin-top: 40px;
+    border-bottom: 2px solid #f4c400;
+    padding-bottom: 5px;
+  }
+
+
+  /* 🔥 曲ブロック全体をリンク化 */
+  a.song {
+    display: block;
+    background: #222;
+    padding: 10px;
+    margin: 20px 0;
+    border-bottom: 1px solid #333;
+    overflow: hidden;
+    text-decoration: none;   /* 下線消す */
+    color: #fff;             /* 文字色統一 */
+    border-radius: 6px;
+    transition: 0.2s;
+  }
+
+  a.song:hover {
+    background: #333;
+    transform: translateY(-2px);
+  }
+
+  /* 左側の曲サムネイル（回り込み） */
+  .song img {
+    width: 110px;
+    height: 110px;
+    object-fit: cover;
+    float: left;
+    margin-right: 15px;
+    border: 3px solid #f4c400;
+  }
+
+  .song .title {
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffe65b;
+  }
+
+  .song .desc {
+    opacity: 0.85;
+  }
+
+  /* スマホ用調整 */
+  @media screen and (max-width: 600px) {
+    .song img {
+      width: 80px;
+      height: 80px;
+    }
+    h1 { font-size: 24px; }
+    h2 { font-size: 20px; }
+  }
+</style>
+</head>
+
+<body>
+
+<!-- ★ トップバナー -->
+<img id="banner" src="imgs/banner.png" alt="THEE INSANE MONKEYS">
+
+<div class="wrap">
+
+  <!-- ★ ライブ開催日時 -->
+  <h1>2025/11/22 THEE INSANE MONKEYS LIVE セットリスト</h1>
+
+  <!-- ★ 説明 -->
+  <p class="desc">
+    当日のセットリストです。<br>
+    各曲をタップすると、YouTube埋め込み＋歌詞ページへ移動します。<br>
+    ライブの余韻に浸りながら楽しんでね！
+  </p>
+
+  <h2>SET LIST</h2>
+
+  <!-- ★ 曲リスト（クリックでページへ） -->
+  <a class="song" href="lilys/01.html">
+    <img src="imgs/thumb01.png" alt="">
+    <div class="text">
+      <span class="title">01. RIPPER</span><br>
+      <span class="desc">激しさと切なさが同居するロックナンバー。</span>
+    </div>
+  </a>
+
+  <a class="song" href="lilys/02.html">
+    <img src="imgs/thumb01.png" alt="">
+    <div class="text">
+      <span class="title">02. 死神</span><br>
+      <span class="desc">重く深い世界へ誘うダークロック。</span>
+    </div>
+  </a>
+
+  <a class="song" href="lilys/03.html">
+    <img src="imgs/thumb01.png" alt="">
+    <div class="text">
+      <span class="title">03. TITLE</span><br>
+      <span class="desc">ここに曲の説明文を追加できます。</span>
+    </div>
+  </a>
+
+</div>
+
+</body>
+</html>
