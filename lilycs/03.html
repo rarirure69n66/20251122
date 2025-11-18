@@ -41,7 +41,7 @@
 
   /* --- 歌詞全体のラッパー --- */
   #lyricsWrap {
-    margin-top: 300px;       /* ← ★YouTubeの高さと必ず同じ */
+    margin-top: 100px;       /* ← ★YouTubeの高さと必ず同じ */
     padding-bottom: 100px;
   }
 
@@ -60,14 +60,17 @@
     font-weight: bold;
     color: #ffe65b;
     margin-bottom: 10px;
-    text-align: center;
+    text-align: left;
   }
 
-  /* --- BACKボタン --- */
-  #backBtn {
-    position: fixed;
+/* BACKボタン：歌詞エリア（800px）内に収める */
+#backBtn {
+    position: fixed;     /* ← 追従したいので fixed に戻す */
     bottom: 20px;
-    right: 20px;
+    right: 50%;          /* ← 画面中央ラインまで寄せる */
+    transform: translateX(400px); 
+    /* ↑ 800px カラムの半分を右へずらす（＝カラムの右端にぴったり） */
+
     background: #f4c400;
     color: #111;
     padding: 12px 18px;
@@ -75,10 +78,19 @@
     font-weight: bold;
     border-radius: 8px;
     text-decoration: none;
-    z-index: 1000;
+    z-index: 999;
     box-shadow: 0 4px 10px rgba(0,0,0,0.4);
     transition: 0.2s;
-  }
+}
+
+
+#lyricsInner {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 10px 20px;
+    position: relative;   /* ← ★絶対に必要！！ */
+}
+
   #backBtn:hover {
     background: #ffe65b;
     transform: translateY(-2px);
@@ -92,7 +104,7 @@
     }
 
     #lyricsWrap {
-      margin-top: 240px;
+      margin-top: 40px;
     }
 
     #lyrics {
@@ -106,6 +118,12 @@
       font-size: 22px;
     }
   }
+  @media (max-width: 850px) {
+  #backBtn {
+    right: 20px;         
+    transform: none;     /* 中央カラム指定を解除 */
+  }
+}
 </style>
 </head>
 
@@ -117,12 +135,13 @@
    allowfullscreen></iframe>
 </div>
 
-<!-- BACKボタン -->
-<a id="backBtn" href="../index.html">← BACK</a>
-
 <!-- 歌詞 -->
 <div id="lyricsWrap">
   <div id="lyrics">
+  <div id="lyricsInner">
+
+<!-- BACKボタン -->
+<a id="backBtn" href="../index.html">← BACK</a>
 
 <div class="title">『NEW YORK CITY LOSER』</div>
 夢にまで見た UFOな夕暮れ だろ？
@@ -175,7 +194,7 @@
 
 
 そこらじゅうにあるでしょ
-</div>
+</div></div>
 
 </body>
 </html>
