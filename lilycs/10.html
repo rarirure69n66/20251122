@@ -91,10 +91,10 @@
     position: relative;   /* ← ★絶対に必要！！ */
 }
 
-  #backBtn:hover {
+#backBtn:hover {
     background: #ffe65b;
-    transform: translateY(-2px);
-  }
+    transform: translateX(400px) translateY(-2px); /* ← 上書きしない！ */
+}
 
   /* --- スマホ版（600px以下） --- */
   @media screen and (max-width: 600px) {
@@ -118,11 +118,18 @@
       font-size: 22px;
     }
   }
-  @media (max-width: 850px) {
-  #backBtn {
-    right: 20px;         
-    transform: none;     /* 中央カラム指定を解除 */
-  }
+	/* スマホ版：位置固定（右下）＆ホバーを無効化 */
+	@media (max-width: 850px) {
+
+	  #backBtn {
+	    right: 20px;
+	    transform: none;   /* ← スマホは中央カラム指定なし */
+	  }
+
+	  #backBtn:hover {
+	    transform: none;   /* ← ホバー時に位置が変わらないように */
+	  }
+	}
 }
 </style>
 </head>
