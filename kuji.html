@@ -1,0 +1,167 @@
+﻿<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>抽選アプリ</title>
+<style>
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    text-align: center;
+    padding: 40px;
+    background: #000;
+    color: #fff;
+  }
+  input {
+    font-size: 24px;
+    padding: 8px 12px;
+    width: 150px;
+    text-align: center;
+    background: #222;
+    color: #fff;
+    border: 1px solid #444;
+  }
+  button {
+    font-size: 28px;
+    padding: 12px 24px;
+    margin-top: 20px;
+    background: #ffcc00; /* キリンイエロー */
+    color: #000;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+  }
+  #result {
+    font-size: 120px;
+    margin-top: 40px;
+    font-weight: bold;
+    color: #ffcc00; /* キリンイエロー */
+    text-shadow: 0 0 20px #ffcc00;
+    height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  #history {
+    margin-top: 20px;
+    font-size: 20px;
+    color: #bbb;
+    max-width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.4;
+  }
+</style>
+</head>
+<body>
+
+<h2 style="color:#ffcc00;">抽選アプリ</h2>
+
+<p>お客さんの人数：
+<input type="number" id="max" value="30">
+</p>
+
+<button onclick="startAnimation()">抽選する！</button>
+
+<div id="result"></div>
+<div id="history"></div>
+
+<script>
+let used = [];
+let animating = false;
+
+// ----------------------
+// 5秒抽選アニメーション
+// ----------------------
+function startAnimation() {
+    if (animating) return;
+    const max = parseInt(document.getElementById("max").value);
+    if (!max || max <= 0) return;
+
+    animating = true;
+    let time = 0;
+
+    // アニメ時間 5000ms（5秒）
+    const duration = 5000;
+
+    // 初期インターバル（速い）
+    let interval = 50;
+
+    const timer = setInterval(() => {
+        time += interval;
+
+        // ランダム表示
+        const randomNum = Math.floor(Math.random() * max) + 1;
+        document.getElementById("result").innerText = randomNum;
+
+        // 時間経過で徐々に遅くしていく
+
+        // 0〜1秒：高速
+        if (time > 1000 && interval === 50) {
+            interval = 100; clearInterval(timer); startNext(interval, time);
+        }
+        // 1〜3秒：中速
+        else if (time > 3000 && interval === 100) {
+            interval = 200; clearInterval(timer); startNext(interval, time);
+        }
+        // 3〜4.5秒：低速
+        else if (time > 4500 && interval === 200) {
+            interval = 350; clearInterval(timer); startNext(interval, time);
+        }
+
+        // 終了
+        if (time >= duration) {
+            clearInterval(timer);
+            setTimeout(draw, 200);
+        }
+
+    }, interval);
+
+    // 次のスピードでアニメ継続
+    function startNext(newInterval, currentTime) {
+        const t = setInterval(() => {
+            time += newInterval;
+            const randomNum = Math.floor(Math.random() * max) + 1;
+            document.getElementById("result").innerText = randomNum;
+
+            if (time >= duration) {
+                clearInterval(t);
+                setTimeout(draw, 200);
+            }
+        }, newInterval);
+    }
+}
+
+// ----------------------
+// 最終当選番号
+// ----------------------
+function draw() {
+    const max = parseInt(document.getElementById("max").value);
+    let candidates = [];
+
+    for (let i = 1; i <= max; i++) {
+        if (!used.includes(i)) candidates.push(i);
+    }
+
+    if (candidates.length === 0) {
+        document.getElementById("result").innerText = "END";
+        animating = false;
+        return;
+    }
+
+    const pick = candidates[Math.floor(Math.random() * candidates.length)];
+    used.push(pick);
+
+    // ピタッと止めて当選表示
+    document.getElementById("result").innerText = pick;
+
+    document.getElementById("history").innerText =
+        "出た番号：" + used.join(", ");
+
+    animating = false;
+}
+</script>
+
+
+</body>
+</html>
