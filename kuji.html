@@ -11,9 +11,10 @@
     padding: 40px;
     background: #000;
     color: #fff;
+    overflow-x: hidden;
   }
   input {
-    font-size: 24px;
+    font-size: 22px;
     padding: 8px 12px;
     width: 150px;
     text-align: center;
@@ -22,26 +23,64 @@
     border: 1px solid #444;
   }
   button {
-    font-size: 28px;
+    font-size: 26px;
     padding: 12px 24px;
     margin-top: 20px;
-    background: #ffcc00; /* キリンイエロー */
+    background: #ffcc00;
     color: #000;
     border: none;
     border-radius: 10px;
     font-weight: bold;
   }
+
+  /* --- 数字（横幅いっぱい＋中央） --- */
   #result {
-    font-size: 120px;
+    font-size: 30vw; /* 横幅に連動して巨大に */
     margin-top: 40px;
     font-weight: bold;
-    color: #ffcc00; /* キリンイエロー */
-    text-shadow: 0 0 20px #ffcc00;
-    height: 150px;
+    color: #ffcc00;
+    text-shadow: 0 0 25px #ffcc00, 0 0 60px #ffcc00;
+    height: 35vw;
+    line-height: 35vw;
     display: flex;
     justify-content: center;
     align-items: center;
+    position: relative;
   }
+
+  /* --- 光の輪（決定時エフェクト） --- */
+  .ring {
+    position: absolute;
+    width: 5vw;
+    height: 5vw;
+    border: 0.5vw solid #ffcc00;
+    border-radius: 50%;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    opacity: 0.9;
+    animation: ringExpand 0.7s ease-out forwards;
+    pointer-events: none;
+  }
+
+  @keyframes ringExpand {
+    0%   { transform: translate(-50%, -50%) scale(0.1); opacity: 1; }
+    80%  { transform: translate(-50%, -50%) scale(3.5); opacity: 0.4; }
+    100% { transform: translate(-50%, -50%) scale(5); opacity: 0; }
+  }
+
+  /* --- 数字バウンド --- */
+  .bounce {
+    animation: bounceAnim 0.5s ease-out;
+  }
+
+  @keyframes bounceAnim {
+    0%   { transform: scale(0.2); opacity: 0.2; }
+    55%  { transform: scale(1.25); opacity: 1; }
+    70%  { transform: scale(0.9); }
+    100% { transform: scale(1.0); }
+  }
+
   #history {
     margin-top: 20px;
     font-size: 20px;
@@ -58,7 +97,7 @@
 <h2 style="color:#ffcc00;">抽選アプリ</h2>
 
 <p>お客さんの人数：
-<input type="number" id="max" value="30">
+  <input type="number" id="max" value="30">
 </p>
 
 <button onclick="startAnimation()">抽選する！</button>
@@ -70,9 +109,9 @@
 let used = [];
 let animating = false;
 
-// ----------------------
-// 5秒抽選アニメーション
-// ----------------------
+// --------------------------------------
+// ★ 5秒抽選アニメーション
+// --------------------------------------
 function startAnimation() {
     if (animating) return;
     const max = parseInt(document.getElementById("max").value);
@@ -80,31 +119,23 @@ function startAnimation() {
 
     animating = true;
     let time = 0;
-
-    // アニメ時間 5000ms（5秒）
     const duration = 5000;
-
-    // 初期インターバル（速い）
     let interval = 50;
 
     const timer = setInterval(() => {
         time += interval;
 
-        // ランダム表示
+        // ランダム数字表示
         const randomNum = Math.floor(Math.random() * max) + 1;
         document.getElementById("result").innerText = randomNum;
 
-        // 時間経過で徐々に遅くしていく
-
-        // 0〜1秒：高速
+        // スピード段階的に遅く
         if (time > 1000 && interval === 50) {
             interval = 100; clearInterval(timer); startNext(interval, time);
         }
-        // 1〜3秒：中速
         else if (time > 3000 && interval === 100) {
             interval = 200; clearInterval(timer); startNext(interval, time);
         }
-        // 3〜4.5秒：低速
         else if (time > 4500 && interval === 200) {
             interval = 350; clearInterval(timer); startNext(interval, time);
         }
@@ -114,10 +145,8 @@ function startAnimation() {
             clearInterval(timer);
             setTimeout(draw, 200);
         }
-
     }, interval);
 
-    // 次のスピードでアニメ継続
     function startNext(newInterval, currentTime) {
         const t = setInterval(() => {
             time += newInterval;
@@ -132,9 +161,9 @@ function startAnimation() {
     }
 }
 
-// ----------------------
-// 最終当選番号
-// ----------------------
+// --------------------------------------
+// ★ 最終当選番号（バウンド + 光リング）
+// --------------------------------------
 function draw() {
     const max = parseInt(document.getElementById("max").value);
     let candidates = [];
@@ -152,16 +181,30 @@ function draw() {
     const pick = candidates[Math.floor(Math.random() * candidates.length)];
     used.push(pick);
 
-    // ピタッと止めて当選表示
-    document.getElementById("result").innerText = pick;
+    const result = document.getElementById("result");
 
+    // 数字表示
+    result.innerText = pick;
+
+    // バウンド
+    result.classList.remove("bounce");
+    void result.offsetWidth; // 再アニメーションのため
+    result.classList.add("bounce");
+
+    // 光の輪
+    const ring = document.createElement("div");
+    ring.classList.add("ring");
+    result.appendChild(ring);
+
+    setTimeout(() => ring.remove(), 800);
+
+    // 履歴
     document.getElementById("history").innerText =
         "出た番号：" + used.join(", ");
 
     animating = false;
 }
 </script>
-
 
 </body>
 </html>
