@@ -21,6 +21,13 @@
     max-width: 100%;
     display: block;
   }
+  
+  #banner2 {
+	  width: 100%;
+	  max-width: 100%;
+	  display: block;
+	  margin-bottom: 15px;
+	}
 
   .wrap {
     padding: 20px;
@@ -28,11 +35,36 @@
     margin: auto;
   }
 
+h1 {
+  font-size: 30px;
+  font-weight: 900;
+  text-align: center;
+  padding: 14px 10px;
+  margin: 25px 0 15px 0;
+  color: #f4c400;
+  letter-spacing: 1.5px;
+
+  /* 背景に薄い黒帯で可読性UP */
+  background: rgba(0, 0, 0, 0.45);
+  border-radius: 8px;
+
+  /* ほんのり光らせてライブ感を演出 */
+  text-shadow:
+    0 0 6px rgba(255, 227, 110, 0.5),
+    0 0 12px rgba(255, 227, 110, 0.25);
+}
+
+/* スマホ用 */
+@media screen and (max-width: 600px) {
   h1 {
-    font-size: 28px;
-    margin-bottom: 5px;
-    font-weight: bold;
+    font-size: 22px;
+    padding: 14px 8px;
   }
+  h1::after {
+    width: 70%;
+  }
+}
+
 
   .desc {
     font-size: 15px;
@@ -93,7 +125,6 @@
       width: 80px;
       height: 80px;
     }
-    h1 { font-size: 24px; }
     h2 { font-size: 20px; }
   }
 </style>
@@ -107,17 +138,24 @@
 <div class="wrap">
 
   <!-- ★ ライブ開催日時 -->
-  <h1>2025/11/22 THEE INSANE MONKEYS LIVE セットリスト</h1>
+  <h1>2025/11/22 THEE INSANE MONKEYS LIVE 特設ページ</h1>
 
+  
+  
+  <h2>変則4人編成・THE YELLOW MONKEY カバーバンド</h2>
+	<!-- ★ トップバナー2（追加するやつ） -->
+	<img id="banner2" src="imgs/member.png" alt="THEE INSANE MONKEYS メンバー画像">
+
+
+
+  <h2>2025/11/22 SET LIST</h2>
   <!-- ★ 説明 -->
   <p class="desc">
-    当日のセットリストです。<br>
+    今回のセットリストです。<br>
     各曲をタップすると、YouTube埋め込み＋歌詞ページへ移動します。<br>
     ライブの余韻に浸りながら、THE YELLOW MONKEY の世界観を味わってください！<br><br>
     画面最下部に、ライブ当日のYOUTUBEへのリンクもあります！
   </p>
-
-  <h2>SET LIST</h2>
 
   <!-- ★ 曲リスト（クリックでページへ） -->
   <a id="song01" class="song" href="lilycs/01.html">
